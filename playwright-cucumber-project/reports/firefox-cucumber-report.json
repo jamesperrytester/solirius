@@ -1,0 +1,66 @@
+[
+  {
+    "description": "",
+    "elements": [
+      {
+        "description": "",
+        "id": "example-playwright-test;open-playwright-homepage",
+        "keyword": "Scenario",
+        "line": 3,
+        "name": "Open Playwright homepage",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 1212349000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 4,
+            "name": "the user navigates to \"https://playwright.dev\"",
+            "match": {
+              "location": "step-definitions\\exampleSteps.ts:8"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 719298200
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 5,
+            "name": "the page title should contain \"Playwright\"",
+            "match": {
+              "location": "step-definitions\\exampleSteps.ts:13"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 33156600
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 965657500
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      }
+    ],
+    "id": "example-playwright-test",
+    "line": 2,
+    "keyword": "Feature",
+    "name": "Example Playwright Test",
+    "tags": [],
+    "uri": "features\\example.feature"
+  }
+]

@@ -1,0 +1,17 @@
+{
+  "devDependencies": {
+    "@cucumber/cucumber": "^12.2.0",
+    "@playwright/test": "^1.57.0",
+    "@types/node": "^24.10.1",
+    "cucumber-html-reporter": "^7.2.0",
+    "playwright": "^1.57.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  },
+  "scripts": {
+    "test:all": "node run-all-browsers.js",
+    "test:chromium": "set PLAYWRIGHT_BROWSER=chromium&& cucumber-js",
+    "test:firefox": "set PLAYWRIGHT_BROWSER=firefox&& cucumber-js",
+    "test:webkit": "set PLAYWRIGHT_BROWSER=webkit&& cucumber-js"
+  }
+}
