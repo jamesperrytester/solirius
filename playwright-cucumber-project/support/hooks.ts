@@ -17,7 +17,7 @@ Before(async function () {
       browser = await webkit.launch({ headless: true });
       break;
     default:
-      browser = await chromium.launch({ headless: true });
+      browser = await chromium.launch({ headless: false });
   }
 
   const context = await browser.newContext();
