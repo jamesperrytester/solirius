@@ -4,43 +4,132 @@
     "elements": [
       {
         "description": "",
-        "id": "example-playwright-test;open-playwright-homepage",
+        "id": "calculate-holiday-entitlement-on-the-government-website;calculate-holiday-entitlement-for-an-employee",
         "keyword": "Scenario",
-        "line": 3,
-        "name": "Open Playwright homepage",
+        "line": 4,
+        "name": "Calculate holiday entitlement for an employee",
         "steps": [
           {
             "keyword": "Before",
             "hidden": true,
             "result": {
               "status": "passed",
-              "duration": 1754474100
+              "duration": 556410799
             }
           },
           {
             "arguments": [],
             "keyword": "Given ",
-            "line": 4,
-            "name": "the user navigates to \"https://playwright.dev\"",
+            "line": 5,
+            "name": "I am on the \"Calculate your holiday entitlement\" page",
             "match": {
-              "location": "step-definitions\\exampleSteps.ts:8"
+              "location": "step-definitions\\CalculateHolidayEntitlementStepDefinitions.ts:7"
             },
             "result": {
               "status": "passed",
-              "duration": 683150299
+              "duration": 489819400
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 6,
+            "name": "I proceed to answer does the employee work irregular hours or for part of the year",
+            "match": {
+              "location": "step-definitions\\CalculateHolidayEntitlementStepDefinitions.ts:14"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 395210200
+            }
+          },
+          {
+            "arguments": [
+              {
+                "rows": [
+                  {
+                    "cells": [
+                      "DayMonthYear",
+                      "01/02/2024"
+                    ]
+                  }
+                ]
+              }
+            ],
+            "keyword": "When ",
+            "line": 7,
+            "name": "I proceed to answer when does the leave year start",
+            "match": {
+              "location": "step-definitions\\CalculateHolidayEntitlementStepDefinitions.ts:21"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 805679200
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 9,
+            "name": "I proceed to answer is the holiday entitlement based on",
+            "match": {
+              "location": "step-definitions\\CalculateHolidayEntitlementStepDefinitions.ts:30"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 436534700
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 10,
+            "name": "I proceed to answer do you want to work out holiday",
+            "match": {
+              "location": "step-definitions\\CalculateHolidayEntitlementStepDefinitions.ts:37"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 483327799
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 11,
+            "name": "I proceed to answer number of hours worked per week",
+            "match": {
+              "location": "step-definitions\\CalculateHolidayEntitlementStepDefinitions.ts:44"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 597014499
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 12,
+            "name": "I proceed to answer number of days worked per week",
+            "match": {
+              "location": "step-definitions\\CalculateHolidayEntitlementStepDefinitions.ts:52"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1077176100
             }
           },
           {
             "arguments": [],
             "keyword": "Then ",
-            "line": 5,
-            "name": "the page title should contain \"Playwright\"",
+            "line": 13,
+            "name": "the system should display the correct holiday entitlement",
             "match": {
-              "location": "step-definitions\\exampleSteps.ts:13"
+              "location": "step-definitions\\CalculateHolidayEntitlementStepDefinitions.ts:61"
             },
             "result": {
               "status": "passed",
-              "duration": 14033999
+              "duration": 48051800
             }
           },
           {
@@ -48,7 +137,7 @@
             "hidden": true,
             "result": {
               "status": "passed",
-              "duration": 70372199
+              "duration": 49195100
             }
           }
         ],
@@ -56,11 +145,11 @@
         "type": "scenario"
       }
     ],
-    "id": "example-playwright-test",
+    "id": "calculate-holiday-entitlement-on-the-government-website",
     "line": 2,
     "keyword": "Feature",
-    "name": "Example Playwright Test",
+    "name": "Calculate Holiday Entitlement on the government website",
     "tags": [],
-    "uri": "features\\example.feature"
+    "uri": "features\\CalculateHolidayEntitlement.feature"
   }
 ]

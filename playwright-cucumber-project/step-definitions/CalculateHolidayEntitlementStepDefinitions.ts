@@ -7,7 +7,7 @@ let holidayPage: CalculateHolidayEntitlementPage;
 Given('I am on the {string} page', async function (url: string) {
   holidayPage = new CalculateHolidayEntitlementPage(this.page);
   await holidayPage.goto();
-  await expect(await holidayPage.getTitle()).toContain('Calculate holiday entitlement - GOV.UK');
+  expect(await holidayPage.getTitle()).toContain('Calculate holiday entitlement - GOV.UK');
   await holidayPage.clickStartNowButton();
 });
 
@@ -60,7 +60,6 @@ Then('I proceed to answer number of days worked per week', async function () {
 
 Then('the system should display the correct holiday entitlement', async function () {
   await holidayPage.informationBasedOnYourAnswersElementsVisible();
-  // Native Playwright summary answer checks
   const expectedSummary = {
     'Does the employee work irregular hours or for part of the year?': 'Yes',
     'When does the leave year start?': '1 February 2024', 
@@ -69,12 +68,7 @@ Then('the system should display the correct holiday entitlement', async function
     'Number of hours worked per week?': '40.5',
     'Number of days worked per week?': '5.0',
   };
-  for (const [question, answer] of Object.entries(expectedSummary)) {
-    const row = this.page.locator('.govuk-summary-list__row').filter({
-      has: this.page.locator('.govuk-summary-list__key', { hasText: question })
-    });
-    await expect(row.locator('.govuk-summary-list__value')).toHaveText(answer);
-  }
+  await holidayPage.validateSummaryAnswers(expectedSummary);
 });
 
 

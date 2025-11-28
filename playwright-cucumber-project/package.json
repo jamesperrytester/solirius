@@ -9,9 +9,9 @@
     "typescript": "^5.9.3"
   },
   "scripts": {
-    "test:all": "node run-all-browsers.js",
-    "test:chromium": "set PLAYWRIGHT_BROWSER=chromium&& cucumber-js",
-    "test:firefox": "set PLAYWRIGHT_BROWSER=firefox&& cucumber-js",
-    "test:webkit": "set PLAYWRIGHT_BROWSER=webkit&& cucumber-js"
+    "test:all": "set PLAYWRIGHT_BROWSER=chromium&& cucumber-js --format json:reports/chromium-cucumber-report.json && node generate-report chromium && set PLAYWRIGHT_BROWSER=firefox&& cucumber-js --format json:reports/firefox-cucumber-report.json && node generate-report firefox && set PLAYWRIGHT_BROWSER=webkit&& cucumber-js --format json:reports/webkit-cucumber-report.json && node generate-report webkit",
+    "test:chromium": "set PLAYWRIGHT_BROWSER=chromium&& cucumber-js --format json:reports/chromium-cucumber-report.json && node generate-report chromium",
+    "test:firefox": "set PLAYWRIGHT_BROWSER=firefox&& cucumber-js --format json:reports/firefox-cucumber-report.json && node generate-report firefox",
+    "test:webkit": "set PLAYWRIGHT_BROWSER=webkit&& cucumber-js --format json:reports/webkit-cucumber-report.json && node generate-report webkit"
   }
 }

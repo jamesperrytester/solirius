@@ -37,7 +37,7 @@ export class CalculateHolidayEntitlementPage {
   readonly numberOfDaysWorkedPerWeekInputField: Locator;
   readonly informationBasedOnYourAnswersHeading: Locator;
   readonly statutoryEntitlementText: Locator;
-
+  readonly errorProblemDayText: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -46,7 +46,8 @@ export class CalculateHolidayEntitlementPage {
     // Does the employee work irregular hours or for part of the year?
     this.irregularHoursHeading = page.getByRole('heading', { name: 'Does the employee work irregular hours or for part of the year?' });
     this.irregularHoursText = page.getByText('‘Irregular hours’ means the number of hours an employee works in a pay period often or always changes. ‘Part of the year’ means there are periods of at least a week in a leave year where the employee does not need to work and is not paid.');
-    this.errorProblemText = page.getByText('There is a problem');
+    this.errorProblemText = page.getByText('There is a problem').first();
+    this.errorProblemDayText = page.getByText('There are only 7 days in a week. Please check and enter a correct value.').first();
     this.errorAnswerLink = page.getByRole('link', { name: 'Please answer this question' });
     this.yesRadio = page.getByRole('radio', { name: 'Yes' });
     this.noRadio = page.getByRole('radio', { name: 'No' });
@@ -185,6 +186,7 @@ export class CalculateHolidayEntitlementPage {
   }
 
     async errorValidationHoursPerWeekConfirm() {
+    //  1st scenario - text not accepted
     await this.numberOfHoursWorkedPerWeekInputField.fill('!@#fdsfsa');
     // Confirm error is shown
     await this.continueButton.click();
@@ -198,6 +200,12 @@ export class CalculateHolidayEntitlementPage {
     await this.continueButton.click();
     await expect(this.errorProblemText).toBeVisible();
     await expect(this.errorAnswerLink).toBeVisible();
+    await this.page.waitForLoadState('domcontentloaded'); 
+     // 2nd scenario - boundary analysis - high value not accepted
+    await this.numberOfDaysWorkedPerWeekInputField.fill('8');
+    // Confirm error is shown
+    await this.continueButton.click();
+    await expect(this.errorProblemDayText).toBeVisible();
   }
 
 
@@ -261,4 +269,12 @@ export class CalculateHolidayEntitlementPage {
     }
   }
   
+    async validateSummaryAnswers(expectedSummary: { [key: string]: string }) {
+      for (const [question, answer] of Object.entries(expectedSummary)) {
+        const row = this.page.locator('.govuk-summary-list__row').filter({
+          has: this.page.locator('.govuk-summary-list__key', { hasText: question })
+        });
+        await expect(row.locator('.govuk-summary-list__value')).toHaveText(answer);
+      }
+    }
 }

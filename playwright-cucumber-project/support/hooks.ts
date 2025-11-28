@@ -17,7 +17,7 @@ Before(async function () {
       browser = await webkit.launch({ headless: true });
       break;
     default:
-      browser = await chromium.launch({ headless: false });
+      browser = await chromium.launch({ headless: true });
   }
 
   const context = await browser.newContext();
@@ -31,10 +31,7 @@ After(async function () {
 
 
 AfterAll(async function () {
-  // Ensure reports folder exists
   if (!fs.existsSync('reports')) {
     fs.mkdirSync('reports');
   }
-  // JSON reports should be configured via cucumber.json or CLI arguments
-  // Example: --format json:reports/cucumber-report.json
 });

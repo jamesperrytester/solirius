@@ -1,4 +1,3 @@
-
 const { execSync } = require('child_process');
 const generateReport = require('./generate-report');
 
@@ -9,7 +8,13 @@ browsers.forEach(browser => {
   process.env.BROWSER = browser;
 
   // Run tests and generate JSON report
-  execSync(`npx cucumber-js --format json:reports/${browser}-cucumber-report.json`, { stdio: 'inherit' });
+  execSync(
+    `npx cucumber-js --format json:reports/${browser}-cucumber-report.json`,
+    {
+      stdio: 'inherit',
+      env: { ...process.env, BROWSER: browser }
+    }
+  );
 
   // Generate HTML report for this browser
   generateReport(browser);
