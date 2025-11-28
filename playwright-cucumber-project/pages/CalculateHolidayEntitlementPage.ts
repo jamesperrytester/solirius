@@ -24,6 +24,19 @@ export class CalculateHolidayEntitlementPage {
   readonly annualisedHoursRadioBtn: Locator;
   readonly compressedhoursRadioBtn: Locator;
   readonly shiftsRadioBtn: Locator;
+  readonly doYouWantToWorkOutHolidayHeading: Locator;
+  readonly forAFullLeaveYearRadioBtn: Locator;
+  readonly forSomeoneStartingPartWayThroughLeaveYearRadioBtn: Locator;
+  readonly forSomeoneLeavingPartWayThroughLeaveYearRadioBtn: Locator;
+  readonly forSomeoneStartingAndLeavingPartWayThroughLeaveYearRadioBtn: Locator;
+  readonly numberOfHoursWorkedPerWeekHeading: Locator;
+  readonly numberOfHoursWorkedPerWeekHelpText: Locator;
+  readonly numberOfHoursWorkedPerWeekInputField: Locator;
+  readonly numberOfDaysWorkedPerWeekHeading: Locator;
+  readonly numberOfDaysWorkedPerWeekHelpText: Locator
+  readonly numberOfDaysWorkedPerWeekInputField: Locator;
+  readonly informationBasedOnYourAnswersHeading: Locator;
+  readonly statutoryEntitlementText: Locator;
 
 
   constructor(page: Page) {
@@ -55,6 +68,23 @@ export class CalculateHolidayEntitlementPage {
     this.annualisedHoursRadioBtn = page.getByRole('radio', { name: 'annualised hours' });
     this.compressedhoursRadioBtn = page.getByRole('radio', { name: 'compressed hours' });
     this.shiftsRadioBtn = page.getByRole('radio', { name: 'shifts' });
+    // Do you want to work out holiday:
+    this.doYouWantToWorkOutHolidayHeading = page.getByRole('heading', { name: 'Do you want to work out holiday:' });
+    this.forAFullLeaveYearRadioBtn = page.getByRole('radio', { name: 'for a full leave year' });
+    this.forSomeoneStartingPartWayThroughLeaveYearRadioBtn = page.getByRole('radio', { name: 'for someone starting part way through a leave year' });
+    this.forSomeoneLeavingPartWayThroughLeaveYearRadioBtn = page.getByRole('radio', { name: 'for someone leaving part way through a leave year' });
+    this.forSomeoneStartingAndLeavingPartWayThroughLeaveYearRadioBtn = page.getByRole('radio', { name: 'for someone starting and leaving part way through a leave year' });
+  // Number of hours worked per week
+    this.numberOfHoursWorkedPerWeekHeading = page.getByText('Number of hours worked per')
+    this.numberOfHoursWorkedPerWeekHelpText = page.getByText('Include half-hours, for')
+    this.numberOfHoursWorkedPerWeekInputField = page.getByRole('textbox', { name: 'Number of hours worked per week?' });
+ // Number of days worked per week
+    this.numberOfDaysWorkedPerWeekHeading = page.getByText('Number of days worked per')
+    this.numberOfDaysWorkedPerWeekHelpText = page.getByText('We need this to calculate how many hours are worked in an average day. Include half-days, for example 3.5.')
+    this.numberOfDaysWorkedPerWeekInputField = page.getByRole('textbox', { name: 'Number of days worked per week?' });
+ // Information based on your answers
+    this.informationBasedOnYourAnswersHeading = page.getByRole('heading', { name: 'Calculate holiday entitlement' });
+    this.statutoryEntitlementText = page.getByText('The statutory entitlement is');
   }
 
   async goto() {
@@ -66,11 +96,8 @@ export class CalculateHolidayEntitlementPage {
   }
 
   async enterDetails(details: { [key: string]: string }) {
-    if (details['Start Date']) {
-      await this.startDateInput.fill(details['Start Date']);
-    }
-    if (details['End Date']) {
-      await this.endDateInput.fill(details['End Date']);
+    if (details['DayMonthYear']) {
+      await this.startDateInput.fill(details['DayMonthYear']);
     }
   }
 
@@ -92,7 +119,18 @@ export class CalculateHolidayEntitlementPage {
 
   async clickHoursWorkedPerWeekButton() {
     return this.hoursWorkedPerWeekRadioBtn.click();
+  }
 
+   async clickForAFullLeaveYearButton() {
+    return this.forAFullLeaveYearRadioBtn.click();
+  }
+
+  async fillNumberOFHoursWorkedPerWeek() {
+    return this.numberOfHoursWorkedPerWeekInputField.fill('40.5');
+  }
+
+    async fillNumberOFDaysWorkedPerWeek() {
+    return this.numberOfDaysWorkedPerWeekInputField.fill('5');
   }
 
   async doesTheEmployeeWorkIrregularHoursOrForPartOfTheYearElementsVisible() {
@@ -128,12 +166,40 @@ export class CalculateHolidayEntitlementPage {
   }
 
   async fillLeaveYearStartData(details: { [key: string]: string }) {
-    if (details['Start Date']) {
-      await this.dayTextbox.fill(details['Start Date'].split('/')[0]); // Day
-      await this.monthTextbox.fill(details['Start Date'].split('/')[1]); // Month
-      await this.yearTextbox.fill(details['Start Date'].split('/')[2]); // Year
+    if (details['DayMonthYear']) {
+      await this.dayTextbox.fill(details['DayMonthYear'].split('/')[0]); // Day
+      await this.monthTextbox.fill(details['DayMonthYear'].split('/')[1]); // Month
+      await this.yearTextbox.fill(details['DayMonthYear'].split('/')[2]); // Year
     }
   }
+
+    async errorValidationConfirmDayMonthYear() {
+    // Enter random text value in date fields
+    await this.dayTextbox.fill('abc');
+    await this.monthTextbox.fill('xyz');
+    await this.yearTextbox.fill('!@#');
+    // Confirm error is shown
+    await this.continueButton.click();
+    await expect(this.errorProblemText).toBeVisible();
+    await expect(this.errorAnswerLink).toBeVisible();
+  }
+
+    async errorValidationHoursPerWeekConfirm() {
+    await this.numberOfHoursWorkedPerWeekInputField.fill('!@#fdsfsa');
+    // Confirm error is shown
+    await this.continueButton.click();
+    await expect(this.errorProblemText).toBeVisible();
+    await expect(this.errorAnswerLink).toBeVisible();
+  }
+
+      async errorValidationDaysPerWeekConfirm() {
+    await this.numberOfDaysWorkedPerWeekInputField.fill('!@#fdsfsa');
+    // Confirm error is shown
+    await this.continueButton.click();
+    await expect(this.errorProblemText).toBeVisible();
+    await expect(this.errorAnswerLink).toBeVisible();
+  }
+
 
   async isTheHolidayEntitlementBasedOnElementsVisible() {
     const elements = [
@@ -150,4 +216,49 @@ export class CalculateHolidayEntitlementPage {
     }
   }
 
+   async doYouWantToWorkOutHolidayElementsVisible() {
+    const elements = [
+      this.doYouWantToWorkOutHolidayHeading,
+      this.forAFullLeaveYearRadioBtn,
+      this.forSomeoneStartingPartWayThroughLeaveYearRadioBtn,
+      this.forSomeoneLeavingPartWayThroughLeaveYearRadioBtn,
+      this.forSomeoneStartingAndLeavingPartWayThroughLeaveYearRadioBtn
+    ];
+    for (const el of elements) {
+      await expect(el).toBeVisible();
+    }
+  }
+
+    async numberOFHoursWorkedPerWeekElementsVisible() {
+    const elements = [
+      this.numberOfHoursWorkedPerWeekHeading,
+      this.numberOfHoursWorkedPerWeekHelpText,
+      this.numberOfHoursWorkedPerWeekInputField
+    ];
+    for (const el of elements) {
+      await expect(el).toBeVisible();
+    }
+  }
+
+    async numberOFDaysWorkedPerWeekElementsVisible() {
+    const elements = [
+      this.numberOfDaysWorkedPerWeekHeading,
+      this.numberOfDaysWorkedPerWeekHelpText,
+      this.numberOfDaysWorkedPerWeekInputField
+    ];
+    for (const el of elements) {
+      await expect(el).toBeVisible();
+    }
+  }
+
+     async informationBasedOnYourAnswersElementsVisible() {
+    const elements = [
+      this.informationBasedOnYourAnswersHeading,
+      this.statutoryEntitlementText
+    ];
+    for (const el of elements) {
+      await expect(el).toBeVisible();
+    }
+  }
+  
 }
